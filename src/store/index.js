@@ -1,20 +1,38 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userStatus: 'guest'
+    userStatus: "guest",
+    userProfile: {},
   },
   mutations: {
-     changeUserStatusMutation ({state}) {
-       state.userStatus = 'loggedIn'
-     }
+    changeUserStatusMutation(state, payload) {
+      state.userStatus = "loggedIn";
+      state.userProfile = payload;
+    },
+    userLoggedOut(state) {
+      state.userProfile = {};
+      state.userStatus = "guest";
+    },
   },
   actions: {
-    
+    changeUserStatus({ commit }, payload) {
+      commit("changeUserStatusMutation", payload);
+    },
+    loggedOut({ commit }) {
+      commit("userLoggedOut");
+    },
   },
-  modules: {
-  }
-})
+  getters: {
+    getUserProfile: (state) => {
+      return state.userProfile;
+    },
+    getUserStatus: (state) => {
+      return state.userStatus;
+    },
+  },
+  modules: {},
+});

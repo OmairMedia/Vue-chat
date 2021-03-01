@@ -1,21 +1,18 @@
-import firebase from 'firebase';
+import firebase from "firebase";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA1Jvwy4RctqbW62biHAYS37jx3pr63opI",
-    authDomain: "nuxtproject-7d900.firebaseapp.com",
-    databaseURL: "https://nuxtproject-7d900.firebaseio.com",
-    projectId: "nuxtproject-7d900",
-    storageBucket: "nuxtproject-7d900.appspot.com",
-    messagingSenderId: "794248302889",
-    appId: "1:794248302889:web:5b8c394446ff98a8caa738"
+  apiKey: "AIzaSyDuz3x4MiQjaDQayHzlXazuM8Zihu65nA8",
+  authDomain: "sprout-chat-1a5e1.firebaseapp.com",
+  projectId: "sprout-chat-1a5e1",
+  storageBucket: "sprout-chat-1a5e1.appspot.com",
+  messagingSenderId: "720583591698",
+  appId: "1:720583591698:web:531c71554308fd1c33d5cb",
 };
 
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-if(!firebase.apps.length)
-{
-    firebase.initializeApp(firebaseConfig)
-} 
-
-const fb = firebase ;
+const fb = firebase;
 
 export default fb;

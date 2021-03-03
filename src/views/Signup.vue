@@ -143,6 +143,10 @@ export default {
             if(this.emailValidation && this.passwordValidation && this.usernameValidation && this.confirmpasswordValidation) 
             {
                fb.auth().createUserWithEmailAndPassword(this.email, this.password).then(()=>{
+                  const user = fb.auth().currentUser;
+                  user.updateProfile({
+                      displayName: this.username
+                  })
                    this.$router.push('/')
                }).catch((err) => console.error(err.message))
             }

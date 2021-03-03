@@ -1,26 +1,22 @@
 <template>
   <div class="chat-container container">
        <div class="message-container text-left">
-              <!-- <div class="message">
-                   <h6> <i>Omair</i> - <i>5:51PM</i></h6>
-                   <p>Hello World !</p>
-              </div> -->
 
                <div class="message" v-for="message in messages" :key="message.id">
-                   <h6> <i>Omair</i> - <i>{{message.time}}</i></h6>
+                   <h6> <i>{{message.user}}</i> - <i>{{message.time}}</i></h6>
                    <p>{{message.message}}</p>
               </div>
        </div>
        <div class="send-message">
             <b-form-input id="msg-field" v-model="msg" type="text" placeholder="Type Message"></b-form-input>
-            <b-button id="send-btn" @click="sendMsg()">Send</b-button>
+            <b-button id="send-btn" @click="sendMsg()" @keypress.enter="sendMsg()">Send</b-button>
        </div>
   </div>
 </template>
 
 <script>
-import fb from '../plugins/firebase'
-import moment from 'moment'
+import fb from '../plugins/firebase';
+import moment from 'moment';
 
 export default {
     name:'chat',
@@ -33,17 +29,21 @@ export default {
     methods:{
         sendMsg()
         {
+            const field = document.querySelector('#msg-field');
+            
             this.messages = []
             const user = fb.auth().currentUser;
             const db = fb.firestore();
             
             const data = {
-                user: user.email,
+                user: user.displayName,
                 time: moment().format('MMMM Do YYYY, h:mm:ss a'),
                 message: this.msg
             }
 
             db.collection("chat").add(data).then().catch(err => console.error(err.message));
+ 
+            field.value = '';
         }
     },
     computed: {
@@ -78,7 +78,6 @@ export default {
           const chatref = db.collection('chat');
                 chatref.orderBy("time", "asc").onSnapshot((snapshot) => {
                     snapshot.forEach((doc)=>{
-                        
                         this.messages.push(doc.data())
                         console.log(doc.data())
                     })
@@ -100,6 +99,13 @@ export default {
     flex-direction: column;
 
 }
+
+.message-container {
+  max-height: 500px;
+  min-height: 500px;
+}
+
+
 .send-message 
 {
     display:flex;

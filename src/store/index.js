@@ -5,15 +5,34 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userStatus: 'guest'
+    userStatus: 'guest',
+    userProfile: {}
   },
   mutations: {
-     changeUserStatusMutation ({state}) {
+     changeUserStatusMutation (state , payload) {
        state.userStatus = 'loggedIn'
+       state.userProfile = payload
+     },
+     clearUserStatus (state) {
+       state.userStatus = "guest";
+       state.userProfile = {};
      }
   },
   actions: {
-    
+     SetUserProfile ({ commit } , payload) {
+       commit('changeUserStatusMutation' , payload)
+     },
+     ClearUserProfile ({commit}){
+       commit('clearUserStatus')
+     } 
+  },
+  getters: {
+    getUserProfile: state => {
+      return state.userProfile
+    },
+    getUserStatus: state => {
+      return state.userStatus
+    }
   },
   modules: {
   }

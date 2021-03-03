@@ -10,21 +10,18 @@
         <b-nav-item to="/">Home</b-nav-item>
         <b-nav-item to="/about">About</b-nav-item>
       </b-navbar-nav>
-
       <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-      
-            <b-nav-item to="/login">Login</b-nav-item>
-            <b-nav-item to="/signup">Signup</b-nav-item>
-       
-   
+      <b-navbar-nav class="ml-auto" >
+         
+            <b-nav-item to="/login" v-if="status === 'guest'">Login</b-nav-item>
+            <b-nav-item to="/signup" v-if="status === 'guest'">Signup</b-nav-item>
 
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
-            <em>User</em>
+            <em>{{profile.email}}</em>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item to="/profile">Profile</b-dropdown-item>
           <b-dropdown-item @click="signOut()">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
@@ -37,10 +34,10 @@
 import fb from '../plugins/firebase'
 export default {
    name:'navBar',
+   props: [ 'profile' , 'status' ],
    data()
    {
        return{
-          
        }
    },
    computed: {
@@ -58,8 +55,7 @@ export default {
          return status;
        },
    },
-   methods:{
-       
+   methods:{  
        signOut(){
            fb.auth().signOut().then(()=>{
                this.$router.push('/login')

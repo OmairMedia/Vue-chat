@@ -1,16 +1,18 @@
 <template>
-  <div class="chat-container container">
-       <div class="message-container text-left">
+  <div class="container">
 
-               <div class="message" v-for="message in messages" :key="message.id">
-                   <h6> <i>{{message.user}}</i> - <i>{{message.time}}</i></h6>
+       <div class="chat-container text-left">
+               <div class="message px-4 py-4 my-4 mx-4" v-for="message in messages" :key="message.id">
+                   <h6> <b> <i style="color:#219AD3">{{message.user}}</i> - <i>{{message.time}}</i> </b></h6>
                    <p>{{message.message}}</p>
-              </div>
-       </div>
+               </div>
+       </div> 
+ 
        <div class="send-message">
             <b-form-input id="msg-field" v-model="msg" type="text" placeholder="Type Message"></b-form-input>
-            <b-button id="send-btn" @click="sendMsg()" @keypress.enter="sendMsg()">Send</b-button>
+            <b-button id="send-btn" class="btn btn-success" @click="sendMsg()" @keyup.enter="sendMsg()">Send</b-button>
        </div>
+      
   </div>
 </template>
 
@@ -44,6 +46,12 @@ export default {
             db.collection("chat").add(data).then().catch(err => console.error(err.message));
  
             field.value = '';
+            
+            const container = document.querySelector('.chat-container');
+            // Scroll down
+            container.scrollTop = container.scrollHeight;
+            
+
         }
     },
     computed: {
@@ -61,7 +69,7 @@ export default {
                     console.log(snapshot)
                     snapshot.forEach((data)=>{
                         this.messages.push(data)
-                        console.log(data)
+                        
                     })
                 }, (error) => {
                     console.error(error)
@@ -70,7 +78,8 @@ export default {
 
             return this.messages
 
-        }
+        },
+        
     },
     mounted()
     {
@@ -79,7 +88,7 @@ export default {
                 chatref.orderBy("time", "asc").onSnapshot((snapshot) => {
                     snapshot.forEach((doc)=>{
                         this.messages.push(doc.data())
-                        console.log(doc.data())
+                        
                     })
                 }, (error) => {
                     console.error(error)
@@ -93,18 +102,21 @@ export default {
 .chat-container 
 {
     overflow-y: scroll;
-    min-height:100vh;
-    max-height:100vh;
+    scroll-behavior: smooth;
+    min-height:80vh;
+    max-height:80vh;
     display:flex;
     flex-direction: column;
-
+    background: url('../../public/download.jpg') ;
 }
 
-.message-container {
-  max-height: 500px;
-  min-height: 500px;
+.message {
+    color:#555555;
+    background-color: #FFFFFF;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    max-width:800px;
 }
-
 
 .send-message 
 {
@@ -115,5 +127,6 @@ export default {
 .send-message #send-btn,#msg-field {
     display:inline;
 }
+
 
 </style>

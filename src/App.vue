@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar :profile="getUserProfile" :status="getUserStatus"/>
-    <div class="container mt-2">
+    <div class="">
        <router-view/>
     </div>
   </div>

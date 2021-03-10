@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <nav-bar :profile="getUserProfile" :status="getUserStatus"/>
-    <div class="container mt-2">
+    <div class="">
+      <transition name="fade"></transition>
        <router-view/>
     </div>
   </div>
@@ -20,6 +21,13 @@ export default {
 </script>
 
 <style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
 #app {
   font-family: 'Montserrat', sans-serif;

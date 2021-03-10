@@ -90,7 +90,7 @@ export default {
             if(this.emailValidation && this.passwordValidation) 
             {
                 fb.auth().signInWithEmailAndPassword(this.email , this.password).then(()=>{
-                    this.$router.push('/')
+                    this.$router.push('/chatengine')
                 }).catch((err)=>{
                     console.error(err.message)
                 })

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <b-navbar toggleable="lg" type="dark" variant="info">
+  <b-navbar toggleable="lg" type="dark" variant="dark">
     <b-navbar-brand href="#">Vue-chat</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -9,17 +9,18 @@
       <b-navbar-nav>
         <b-nav-item to="/">Home</b-nav-item>
         <b-nav-item to="/about">About</b-nav-item>
+        <b-nav-item to="/login" v-if="status === 'guest'">Login</b-nav-item>
+        <b-nav-item to="/signup" v-if="status === 'guest'">Signup</b-nav-item>
       </b-navbar-nav>
       <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto" >
-         
-            <b-nav-item to="/login" v-if="status === 'guest'">Login</b-nav-item>
-            <b-nav-item to="/signup" v-if="status === 'guest'">Signup</b-nav-item>
-
+      <b-navbar-nav class="ml-auto" v-if="status === 'loggedIn'">
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
             <em>{{profile.email}}</em>
+            <picture>
+             <img srcset="../assets/avatar.png 10x" class="img-fluid img img-rounded" alt="...">
+            </picture>
           </template>
           <b-dropdown-item to="/profile">Profile</b-dropdown-item>
           <b-dropdown-item @click="signOut()">Sign Out</b-dropdown-item>

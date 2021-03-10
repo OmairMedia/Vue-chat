@@ -11,16 +11,33 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    // beforeEnter: (to, from, next) => {
+    //     fb.auth().onAuthStateChanged((user)=>{
+    //       if(user)
+    //       {
+    //          next()
+    //       }else{
+    //          next(false)
+    //       }
+    //     })
+    //   }
+  },
+  {
+    path: '/chatengine',
+    name: 'Chats',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Chats.vue'),
     beforeEnter: (to, from, next) => {
-        fb.auth().onAuthStateChanged((user)=>{
-          if(user)
-          {
-             next()
-          }else{
-             next(false)
-          }
-        })
-      }
+      fb.auth().onAuthStateChanged((user) => {
+        if (user) {
+          next()
+        } else {
+          next('/login')
+        }
+      })
+    }
   },
   {
     path: '/about',
@@ -37,16 +54,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
-     beforeEnter: (to, from, next) => {
-        fb.auth().onAuthStateChanged((user)=>{
-          if(user)
-          {
-             next(false)
-          }else{
-             next()
-          }
-        })
-      }
+    beforeEnter: (to, from, next) => {
+      fb.auth().onAuthStateChanged((user) => {
+        if (user) {
+          next(false)
+        } else {
+          next()
+        }
+      })
+    }
   },
   {
     path: '/signup',
@@ -55,16 +71,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Signup.vue'),
-     beforeEnter: (to, from, next) => {
-        fb.auth().onAuthStateChanged((user)=>{
-          if(user)
-          {
-             next(false)
-          }else{
-             next()
-          }
-        })
-      }
+    beforeEnter: (to, from, next) => {
+      fb.auth().onAuthStateChanged((user) => {
+        if (user) {
+          next(false)
+        } else {
+          next()
+        }
+      })
+    }
   }
 ]
 
